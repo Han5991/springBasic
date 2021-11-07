@@ -2,7 +2,7 @@ package hello.core.member;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MemoryMemberRepository implements MemeberRepository {
+public class MemoryMemberRepository implements MemberRepository {
 
     private static ConcurrentHashMap<Long, Member> sore = new ConcurrentHashMap<>();
 
