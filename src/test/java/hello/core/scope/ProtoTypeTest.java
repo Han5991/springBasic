@@ -23,6 +23,7 @@ public class ProtoTypeTest {
 
         assertThat(protoTypeBean1).isNotSameAs(protoTypeBean2);
 
+
         context.close();
     }
 
