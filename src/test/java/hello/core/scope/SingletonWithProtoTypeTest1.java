@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Provider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,21 +34,19 @@ public class SingletonWithProtoTypeTest1 {
         assertThat(logic).isEqualTo(1);
         ClientBean clientBean2 = context.getBean(ClientBean.class);
         int logic1 = clientBean2.logic();
-        assertThat(logic1).isEqualTo(2);
+        assertThat(logic1).isEqualTo(1);
     }
 
     @Scope("singleton")
     static class ClientBean {
-        private final ProtoTypeBean protoTypeBean; //생성시점에 주입
 
         @Autowired
-        public ClientBean(ProtoTypeBean protoTypeBean) {
-            this.protoTypeBean = protoTypeBean;
-        }
+        private Provider<ProtoTypeBean> provider;
 
         public int logic() {
-            protoTypeBean.addCount();
-            return protoTypeBean.getCount();
+            ProtoTypeBean providerObject = provider.get(); // getObject 프로토 타입을 찾아주는 매서드
+            providerObject.addCount();
+            return providerObject.getCount();
         }
     }
 
